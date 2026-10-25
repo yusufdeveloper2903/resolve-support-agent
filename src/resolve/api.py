@@ -173,6 +173,11 @@ def _sse(event: AgentEvent) -> ServerSentEvent:
     return ServerSentEvent(event=event.type, data=event.data)
 
 
-def main() -> None:
+def app_from_env() -> FastAPI:
+    """App factory for `uvicorn --factory` (used by the Dockerfile)."""
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
-    uvicorn.run(create_app(Settings.from_env()), host="127.0.0.1", port=8000)
+    return create_app(Settings.from_env())
+
+
+def main() -> None:
+    uvicorn.run(app_from_env(), host="127.0.0.1", port=8000)
