@@ -89,7 +89,7 @@ def transcript(messages: list[Message]) -> list[dict[str, Any]]:
     for message in messages:
         for block in message["content"]:
             if block["type"] == "text" and block["text"].strip():
-                entries.append({"kind": message["role"], "text": block["text"]})
+                entries.append({"kind": message["role"], "text": block["text"].strip()})
             elif block["type"] == "tool_use":
                 entries.append(
                     {

@@ -23,7 +23,7 @@ from resolve import approvals, audit, conversations
 from resolve.agent import Agent, AgentEvent, AnthropicModel, ConversationStateError, ModelClient
 from resolve.config import Settings
 from resolve.db import Database
-from resolve.seed import seed
+from resolve.seed import ensure_seeded, seed
 
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -45,8 +45,7 @@ class Decision(BaseModel):
 def create_app(settings: Settings, model: ModelClient | None = None) -> FastAPI:
     """`model` is injectable for tests; by default a real client is built when a key exists."""
     db = Database(settings.db_path)
-    if db.query_one("SELECT name FROM sqlite_master WHERE name = 'customers'") is None:
-        seed(db)
+    ensure_seeded(db)
     if model is None and settings.api_key:
         model = AnthropicModel(anthropic.AsyncAnthropic(api_key=settings.api_key))
     agent = (

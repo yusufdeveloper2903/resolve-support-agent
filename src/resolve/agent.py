@@ -115,10 +115,8 @@ class Agent:
                     assert approval["result"] is not None
                     outcome = approval["result"]
                     entry = _tool_result(entry["tool_use_id"], outcome["data"], outcome["is_error"])
-                    yield AgentEvent(
-                        "tool_result",
-                        {"id": entry["tool_use_id"], "status": approval["status"]},
-                    )
+                    status = outcome_label(outcome["data"], outcome["is_error"])
+                    yield AgentEvent("tool_result", {"id": entry["tool_use_id"], "status": status})
                 results.append(entry)
             conversations.unpark(self.db, conversation_id, results)
             async for event in self._run(conversation):

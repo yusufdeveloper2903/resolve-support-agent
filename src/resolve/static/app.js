@@ -127,7 +127,7 @@ function handleEvent(type, data, bubble) {
   switch (type) {
     case "text":
       if (!bubble) { bubble = addBubble("assistant", ""); bubble.classList.add("typing"); }
-      bubble.textContent += data.delta;
+      bubble.textContent = (bubble.textContent + data.delta).trimStart();
       scrollDown();
       return bubble;
     case "tool_call":

@@ -19,6 +19,7 @@ from pydantic import BaseModel
 
 from resolve.config import Settings
 from resolve.db import Database
+from resolve.seed import ensure_seeded
 from resolve.tools import REGISTRY, ToolContext, ToolSpec, call_tool
 
 
@@ -70,5 +71,5 @@ def _mcp_function(spec: ToolSpec, db: Database, customer_id: str) -> Any:
 def main() -> None:
     settings = Settings.from_env()
     db = Database(settings.db_path)
-    db.init_schema()
+    ensure_seeded(db)
     build_server(db, settings.mcp_customer_id).run("stdio")

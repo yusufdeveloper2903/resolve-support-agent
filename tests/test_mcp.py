@@ -4,14 +4,17 @@ from __future__ import annotations
 
 import json
 
+from mcp import Client
+
 from resolve import audit
 from resolve.db import Database
 from resolve.mcp_server import build_server
 from resolve.tools import REGISTRY
 
 
-async def test_lists_the_shared_tools(db: Database) -> None:
-    listed = {tool.name: tool for tool in await build_server(db, "C-1001").list_tools()}
+async def test_lists_the_shared_tools_over_the_protocol(db: Database) -> None:
+    async with Client(build_server(db, "C-1001")) as client:
+        listed = {tool.name: tool for tool in (await client.list_tools()).tools}
     assert list(listed) == list(REGISTRY)
     assert listed["issue_refund"].description == REGISTRY["issue_refund"].description
     assert listed["get_order"].annotations.read_only_hint is True  # type: ignore[union-attr]

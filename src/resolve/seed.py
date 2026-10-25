@@ -190,6 +190,13 @@ def seed(db: Database, now: datetime | None = None) -> None:
             )
 
 
+def ensure_seeded(db: Database) -> None:
+    """Seed a brand-new database; leave an existing one alone."""
+    db.init_schema()
+    if db.query_one("SELECT id FROM customers LIMIT 1") is None:
+        seed(db)
+
+
 def main() -> None:
     settings = Settings.from_env()
     seed(Database(settings.db_path))

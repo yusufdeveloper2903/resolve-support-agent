@@ -109,6 +109,7 @@ async def test_approval_pauses_the_turn_and_resume_continues_it(db: Database) ->
     approvals.decide(db, approval_id, approve=True, operator="jordan")
     resumed = await collect(agent.resume(conv["id"]))
 
+    assert resumed[0] == AgentEvent("tool_result", {"id": "toolu_01_0", "status": "refunded"})
     assert reply(resumed) == "Your $144.00 refund is approved and on its way."
     results = model.requests[1]["messages"][-1]["content"]
     assert [r["tool_use_id"] for r in results] == ["toolu_01_0", "toolu_01_1"]  # original order
