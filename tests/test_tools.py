@@ -54,8 +54,11 @@ def test_get_order_normalises_id_and_reports_refundable_amount(db: Database) -> 
 def test_other_customers_order_looks_like_a_missing_one(db: Database) -> None:
     foreign = call_tool(ctx_for(db), "get_order", {"order_id": "NW-5101"})
     missing = call_tool(ctx_for(db), "get_order", {"order_id": "NW-9999"})
-    assert foreign.is_error and missing.is_error
-    assert foreign.data["message"].replace("5101", "") == missing.data["message"].replace("9999", "")
+    assert foreign.is_error
+    assert missing.is_error
+    assert foreign.data["message"].replace("5101", "") == missing.data["message"].replace(
+        "9999", ""
+    )
     outcomes = [row["outcome"] for row in audit.recent(db)]
     assert outcomes[:2] == ["error", "denied"]  # the cross-tenant attempt is flagged as denied
 
@@ -71,7 +74,8 @@ def test_no_tool_reaches_another_customers_order(db: Database, tool: str) -> Non
     if tool == "update_shipping_address":
         args["new_address"] = SEATTLE
     result = call_tool(ctx_for(db), tool, args)
-    assert result.is_error and result.data["error"] == "order_not_found"
+    assert result.is_error
+    assert result.data["error"] == "order_not_found"
     assert order_row(db, "NW-5102")["refunded_cents"] == 0
 
 
@@ -97,7 +101,11 @@ def test_search_is_safe_against_fts_syntax(db: Database, query: str) -> None:
 
 @pytest.mark.parametrize(
     ("query", "slug"),
-    [("refund", "returns-and-refunds"), ("Is there a warranty?", "warranty"), ("shoe size", "shoe-sizing")],
+    [
+        ("refund", "returns-and-refunds"),
+        ("Is there a warranty?", "warranty"),
+        ("shoe size", "shoe-sizing"),
+    ],
 )
 def test_search_ranks_the_matching_article_first(db: Database, query: str, slug: str) -> None:
     result = call_tool(ctx_for(db), "search_help_center", {"query": query})
@@ -120,7 +128,8 @@ def test_address_locked_after_shipping(db: Database) -> None:
 
 def test_invalid_arguments_are_reported_not_raised(db: Database) -> None:
     result = call_tool(ctx_for(db), "issue_refund", {"order_id": "5001", "amount": -3})
-    assert result.is_error and result.data["error"] == "invalid_arguments"
+    assert result.is_error
+    assert result.data["error"] == "invalid_arguments"
     fields = {d["field"] for d in result.data["details"]}
     assert fields == {"order_id", "amount", "reason"}
     assert audit.recent(db, 1)[0]["outcome"] == "invalid"
@@ -146,7 +155,8 @@ def test_refund_cannot_exceed_remaining(db: Database) -> None:
 def test_large_refund_waits_for_approval_then_executes_once(db: Database) -> None:
     args = {"order_id": "NW-5001", "amount": 144.0, "reason": "Too small"}
     parked = call_tool(ctx_for(db), "issue_refund", args)
-    assert parked.data["status"] == "pending_approval" and parked.approval_id
+    assert parked.data["status"] == "pending_approval"
+    assert parked.approval_id
     assert order_row(db, "NW-5001")["refunded_cents"] == 0
 
     decided = approvals.decide(db, parked.approval_id, approve=True, operator="jordan")
@@ -163,7 +173,9 @@ def test_rejected_refund_changes_nothing(db: Database) -> None:
     args = {"order_id": "NW-5001", "amount": 144.0, "reason": "Too small"}
     parked = call_tool(ctx_for(db), "issue_refund", args)
     assert parked.approval_id
-    decided = approvals.decide(db, parked.approval_id, approve=False, operator="jordan", note="Worn")
+    decided = approvals.decide(
+        db, parked.approval_id, approve=False, operator="jordan", note="Worn"
+    )
     assert decided["result"]["data"] == {"status": "rejected_by_specialist", "note": "Worn"}
     assert order_row(db, "NW-5001")["refunded_cents"] == 0
     assert audit.recent(db, 1)[0]["tool"] == "approval_decision"
@@ -173,4 +185,5 @@ def test_escalation_creates_ticket(db: Database) -> None:
     args = {"summary": "Stove broke after two uses", "priority": "normal"}
     result = call_tool(ctx_for(db, "C-1003"), "escalate_to_human", args)
     ticket = db.query_one("SELECT * FROM tickets WHERE id = ?", (result.data["ticket_id"],))
-    assert ticket is not None and ticket["customer_id"] == "C-1003"
+    assert ticket is not None
+    assert ticket["customer_id"] == "C-1003"

@@ -5,8 +5,7 @@ cookie. What matters is *where* identity comes from - the request, never the mod
 conversation is bound to one customer when it is created.
 """
 
-from __future__ import annotations
-
+# No `from __future__ import annotations`: FastAPI resolves the closures' annotations at runtime.
 import logging
 from collections.abc import AsyncIterator
 from pathlib import Path

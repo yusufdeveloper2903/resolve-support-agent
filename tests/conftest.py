@@ -29,5 +29,7 @@ def settings(db: Database) -> Settings:
     )
 
 
-def ctx_for(db: Database, customer_id: str = "C-1001", approved_by: str | None = None) -> ToolContext:
+def ctx_for(
+    db: Database, customer_id: str = "C-1001", approved_by: str | None = None
+) -> ToolContext:
     return ToolContext(db=db, customer_id=customer_id, actor="agent", approved_by=approved_by)

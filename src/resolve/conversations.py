@@ -7,6 +7,7 @@ import json
 from typing import Any
 
 from resolve.db import Database, dumps, new_id, utcnow
+from resolve.tools import outcome_label
 
 Message = dict[str, Any]
 
@@ -83,9 +84,7 @@ def transcript(messages: list[Message]) -> list[dict[str, Any]]:
         for block in message["content"]:
             if block["type"] == "tool_result":
                 data = json.loads(block["content"])
-                outcomes[block["tool_use_id"]] = (
-                    "error" if block.get("is_error") else str(data.get("status", "ok"))
-                )
+                outcomes[block["tool_use_id"]] = outcome_label(data, block.get("is_error", False))
     entries: list[dict[str, Any]] = []
     for message in messages:
         for block in message["content"]:

@@ -1,9 +1,24 @@
 """The tool layer: defined once, used by the Claude agent loop and the MCP server."""
 
 from resolve.tools import handlers as _handlers  # noqa: F401  (registers the tools)
-from resolve.tools.base import REGISTRY, ToolContext, ToolResult, ToolSpec, call_tool
+from resolve.tools.base import (
+    REGISTRY,
+    ToolContext,
+    ToolResult,
+    ToolSpec,
+    call_tool,
+    outcome_label,
+)
 
-__all__ = ["REGISTRY", "ToolContext", "ToolResult", "ToolSpec", "anthropic_tools", "call_tool"]
+__all__ = [
+    "REGISTRY",
+    "ToolContext",
+    "ToolResult",
+    "ToolSpec",
+    "anthropic_tools",
+    "call_tool",
+    "outcome_label",
+]
 
 
 def anthropic_tools() -> list[dict[str, object]]:

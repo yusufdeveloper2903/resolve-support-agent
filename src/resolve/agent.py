@@ -24,7 +24,7 @@ from resolve import approvals, conversations
 from resolve.config import Effort
 from resolve.db import Database, dumps
 from resolve.prompts import SYSTEM_PROMPT
-from resolve.tools import ToolContext, anthropic_tools, call_tool
+from resolve.tools import ToolContext, anthropic_tools, call_tool, outcome_label
 
 log = logging.getLogger(__name__)
 
@@ -180,7 +180,7 @@ class Agent:
                     "tool_call", {"id": block.id, "name": block.name, "input": block.input}
                 )
                 result = await asyncio.to_thread(call_tool, ctx, block.name, block.input)
-                status = "error" if result.is_error else str(result.data.get("status", "ok"))
+                status = outcome_label(result.data, result.is_error)
                 yield AgentEvent(
                     "tool_result", {"id": block.id, "name": block.name, "status": status}
                 )

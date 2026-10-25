@@ -50,6 +50,18 @@ class ToolResult:
         return dumps(self.data)
 
 
+# Statuses that describe what happened to an *action*; anything else is just data ("delivered").
+ACTION_STATUSES = frozenset({"pending_approval", "refunded", "rejected_by_specialist"})
+
+
+def outcome_label(data: dict[str, Any], is_error: bool) -> str:
+    """A short label for a tool result, as shown on UI chips and streamed to clients."""
+    if is_error:
+        return "error"
+    status = data.get("status")
+    return status if status in ACTION_STATUSES else "ok"
+
+
 class ToolInput(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
