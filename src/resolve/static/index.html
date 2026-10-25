@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resolve · Northwind Gear support</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo">R</span> Resolve <small>for Northwind Gear</small></div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" class="tab active" data-view="chat" aria-selected="true">Customer chat</button>
+      <button role="tab" class="tab" data-view="operator" aria-selected="false">
+        Operator console <span id="pending-count" class="badge" hidden></span>
+      </button>
+    </nav>
+    <div class="topbar-right">
+      <span id="agent-status" class="pill">…</span>
+      <button id="theme-toggle" class="icon-btn" title="Toggle theme" aria-label="Toggle theme">◐</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="view-chat" class="view active">
+      <div class="chat-toolbar">
+        <label>Signed in as
+          <select id="customer-select"></select>
+        </label>
+        <button id="new-chat" class="btn ghost">New conversation</button>
+      </div>
+      <div id="messages" class="messages" aria-live="polite">
+        <div class="empty">Ask about an order, a refund or a policy. Try:
+          <button class="suggestion">Where is my latest order?</button>
+          <button class="suggestion">I'd like a refund for my trail runners from NW-5001, they don't fit.</button>
+          <button class="suggestion">Please change the address on NW-5003 to 400 Pine St, Seattle, WA 98101, US</button>
+        </div>
+      </div>
+      <div id="approval-banner" class="banner" hidden>
+        A support specialist is reviewing an action in this conversation. The reply continues as soon as they decide.
+      </div>
+      <form id="composer" class="composer">
+        <textarea id="input" rows="1" placeholder="Message Northwind Gear support…" maxlength="4000" required></textarea>
+        <button class="btn primary" type="submit">Send</button>
+      </form>
+    </section>
+
+    <section id="view-operator" class="view">
+      <div class="operator-grid">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Pending approvals</h2>
+            <label class="operator-name">Operator <input id="operator-name" value="jordan.k"></label>
+          </div>
+          <div id="approvals" class="approvals"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Audit trail</h2>
+            <button id="reset-demo" class="btn ghost small">Reset demo data</button>
+          </div>
+          <div class="table-wrap">
+            <table class="audit">
+              <thead><tr><th>Time</th><th>Actor</th><th>Customer</th><th>Tool</th><th>Outcome</th><th>Arguments</th></tr></thead>
+              <tbody id="audit-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
