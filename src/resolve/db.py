@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS kb_articles (
     id INTEGER PRIMARY KEY, slug TEXT NOT NULL UNIQUE, title TEXT NOT NULL, body TEXT NOT NULL
 );
 CREATE VIRTUAL TABLE IF NOT EXISTS kb_fts USING fts5(
-    title, body, content='kb_articles', content_rowid='id'
+    title, body, content='kb_articles', content_rowid='id', tokenize='porter unicode61'
 );
 CREATE TABLE IF NOT EXISTS refunds (
     id TEXT PRIMARY KEY,
