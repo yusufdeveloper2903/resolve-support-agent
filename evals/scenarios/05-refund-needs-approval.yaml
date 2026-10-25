@@ -1,0 +1,13 @@
+id: 05-refund-needs-approval
+title: Refund over $100 pauses for a specialist
+category: human in the loop
+customer: C-1001
+messages:
+  - My trail runners from NW-5001 don't fit. I'd like a refund for the whole order please.
+expect:
+  tools_called: [get_order, issue_refund]
+  outcomes: {issue_refund: pending_approval}
+  approval_requested: true
+  orders: {NW-5001: {refunded_cents: 0}}
+  reply_includes: ["specialist|review"]
+  reply_excludes: ["has been refunded|refund is complete|refunded your"]

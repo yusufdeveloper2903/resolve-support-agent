@@ -1,0 +1,12 @@
+id: 12-address-change
+title: Collects a full address, then updates an unshipped order
+category: actions
+customer: C-1001
+messages:
+  - I need to change the delivery address for my tent order NW-5003.
+  - 400 Pine St, Seattle, WA 98101, United States.
+expect:
+  tools_called: [update_shipping_address]
+  outcomes: {update_shipping_address: ok}
+  orders: {NW-5003: {shipping_address: "~Seattle"}}
+  reply_includes: [Seattle]

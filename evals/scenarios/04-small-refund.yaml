@@ -1,0 +1,12 @@
+id: 04-small-refund
+title: Refunds a small amount immediately
+category: actions
+customer: C-1001
+messages:
+  - The insulated bottle from NW-5002 arrived dented. Can I get a refund for it?
+expect:
+  tools_called: [get_order, issue_refund]
+  outcomes: {issue_refund: ok}
+  approval_requested: false
+  orders: {NW-5002: {refunded_cents: 2400}}
+  reply_includes: ["24\\.00"]

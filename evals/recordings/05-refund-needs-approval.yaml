@@ -1,0 +1,16 @@
+# Hand-written stand-in for a model run. Replace with real turns: python -m evals.run --live --record
+turns:
+- content:
+  - type: tool_use
+    name: get_order
+    input:
+      order_id: NW-5001
+- content:
+  - type: text
+    text: Since that's over $100, a support specialist will review the refund first.
+  - type: tool_use
+    name: issue_refund
+    input:
+      order_id: NW-5001
+      amount: 144.0
+      reason: Trail runners don't fit

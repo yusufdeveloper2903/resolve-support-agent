@@ -1,0 +1,18 @@
+# Hand-written stand-in for a model run. Replace with real turns: python -m evals.run --live --record
+turns:
+- content:
+  - type: tool_use
+    name: get_order
+    input:
+      order_id: NW-5002
+- content:
+  - type: tool_use
+    name: issue_refund
+    input:
+      order_id: NW-5002
+      amount: 24.0
+      reason: Bottle arrived dented
+- content:
+  - type: text
+    text: Sorry about the dent, Ava. I've refunded $24.00 to your original payment method; it should arrive
+      within 5-7 business days.

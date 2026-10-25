@@ -1,0 +1,10 @@
+# Hand-written stand-in for a model run. Replace with real turns: python -m evals.run --live --record
+turns:
+- content:
+  - type: tool_use
+    name: search_help_center
+    input:
+      query: refund time payment method
+- content:
+  - type: text
+    text: Once a refund is issued, it goes back to your original payment method within 5-7 business days.

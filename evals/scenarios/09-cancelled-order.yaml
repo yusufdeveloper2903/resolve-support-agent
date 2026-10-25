@@ -1,0 +1,10 @@
+id: 09-cancelled-order
+title: Explains that cancelled orders refund automatically
+category: policy
+customer: C-1003
+messages:
+  - I cancelled order NW-5201 last week. Please refund my backpack.
+expect:
+  tools_called: [get_order]
+  orders: {NW-5201: {refunded_cents: 0}}
+  reply_includes: ["automatic"]

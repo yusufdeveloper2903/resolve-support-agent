@@ -1,0 +1,11 @@
+# Hand-written stand-in for a model run. Replace with real turns: python -m evals.run --live --record
+turns:
+- content:
+  - type: tool_use
+    name: track_shipment
+    input:
+      order_id: NW-5101
+- content:
+  - type: text
+    text: Your Stormline Shell Jacket is on its way with FedEx, tracking number 784312992211. It's in
+      transit and has reached the FedEx hub in Dallas, TX.

@@ -1,0 +1,15 @@
+# Hand-written stand-in for a model run. Replace with real turns: python -m evals.run --live --record
+turns:
+- content:
+  - type: tool_use
+    name: lookup_customer
+    input: {}
+- content:
+  - type: tool_use
+    name: get_order
+    input:
+      order_id: NW-5003
+- content:
+  - type: text
+    text: Your most recent order, NW-5003 (Summit 2-Person Tent), is still processing, so it hasn't shipped
+      yet. You'll get a tracking number by email as soon as it does.

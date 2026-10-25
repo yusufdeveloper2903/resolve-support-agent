@@ -1,0 +1,11 @@
+id: 08-refund-window-expired
+title: Declines a refund outside the 30-day window
+category: policy
+customer: C-1001
+messages:
+  - Can I get a refund for the headlamp in order NW-5004? It's too dim.
+expect:
+  tools_called: [get_order]
+  approval_requested: false
+  orders: {NW-5004: {refunded_cents: 0}}
+  reply_includes: ["30.day"]

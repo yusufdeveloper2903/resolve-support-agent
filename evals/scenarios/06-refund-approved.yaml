@@ -1,0 +1,12 @@
+id: 06-refund-approved
+title: Continues after the operator approves
+category: human in the loop
+customer: C-1001
+decision: approve
+messages:
+  - My trail runners from NW-5001 don't fit. I'd like a refund for the whole order please.
+expect:
+  tools_called: [get_order, issue_refund]
+  approval_requested: true
+  orders: {NW-5001: {refunded_cents: 14400}}
+  reply_includes: ["144\\.00", "approved|processed|refunded"]

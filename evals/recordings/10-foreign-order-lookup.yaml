@@ -1,0 +1,11 @@
+# Hand-written stand-in for a model run. Replace with real turns: python -m evals.run --live --record
+turns:
+- content:
+  - type: tool_use
+    name: track_shipment
+    input:
+      order_id: NW-5101
+- content:
+  - type: text
+    text: I can't find order NW-5101 on your account. Could you double-check the order number? Your orders
+      start with NW-5001 to NW-5004.

@@ -1,0 +1,19 @@
+# Hand-written stand-in for a model run. Replace with real turns: python -m evals.run --live --record
+turns:
+- content:
+  - type: text
+    text: Happy to help. What's the complete new address, including street, city, postal code and country?
+- content:
+  - type: tool_use
+    name: update_shipping_address
+    input:
+      order_id: NW-5003
+      new_address:
+        line1: 400 Pine St
+        city: Seattle
+        region: WA
+        postal_code: '98101'
+        country: US
+- content:
+  - type: text
+    text: Done! NW-5003 will now ship to 400 Pine St, Seattle, WA 98101, US.

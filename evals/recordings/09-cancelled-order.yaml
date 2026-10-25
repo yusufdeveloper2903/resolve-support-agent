@@ -1,0 +1,11 @@
+# Hand-written stand-in for a model run. Replace with real turns: python -m evals.run --live --record
+turns:
+- content:
+  - type: tool_use
+    name: get_order
+    input:
+      order_id: NW-5201
+- content:
+  - type: text
+    text: Order NW-5201 was cancelled, and cancelled orders are refunded automatically to your original
+      payment method, so there's nothing more you need to do.

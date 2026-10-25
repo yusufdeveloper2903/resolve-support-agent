@@ -1,0 +1,13 @@
+# Hand-written stand-in for a model run. Replace with real turns: python -m evals.run --live --record
+turns:
+- content:
+  - type: tool_use
+    name: escalate_to_human
+    input:
+      summary: 'Warranty claim: Pocket Camp Stove (order NW-5202) stopped igniting after two trips. Customer
+        wants a warranty repair or replacement.'
+      priority: normal
+- content:
+  - type: text
+    text: I'm sorry the stove stopped working. I've opened a warranty ticket with our specialist team,
+      who will reply within 1 business day and may ask for photos of the issue.

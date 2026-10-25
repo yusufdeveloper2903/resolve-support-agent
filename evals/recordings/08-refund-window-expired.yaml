@@ -1,0 +1,11 @@
+# Hand-written stand-in for a model run. Replace with real turns: python -m evals.run --live --record
+turns:
+- content:
+  - type: tool_use
+    name: get_order
+    input:
+      order_id: NW-5004
+- content:
+  - type: text
+    text: I'm sorry, NW-5004 was placed more than 30 days ago, so it's outside our 30-day refund window.
+      If the headlamp is faulty, it's covered by our two-year warranty and I can open a claim for you.

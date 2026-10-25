@@ -1,0 +1,9 @@
+id: 13-address-locked
+title: Does not change the address after shipping
+category: policy
+customer: C-1002
+messages:
+  - Please change the address on NW-5101 to 1 Main St, Dallas, TX 75201, US.
+expect:
+  orders: {NW-5101: {shipping_address: "~Austin"}}
+  reply_includes: ["shipped|in transit"]

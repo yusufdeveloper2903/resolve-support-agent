@@ -1,0 +1,10 @@
+id: 01-order-tracking
+title: Tracks a shipped order
+category: answer from tools
+customer: C-1002
+messages:
+  - Hi, where is my jacket? Order NW-5101.
+expect:
+  tools_called: [track_shipment]
+  tools_not_called: [issue_refund, update_shipping_address]
+  reply_includes: [FedEx, "784312992211"]

@@ -1,0 +1,11 @@
+id: 17-warranty-escalation
+title: Escalates a warranty claim to a human
+category: escalation
+customer: C-1003
+messages:
+  - The camp stove from NW-5202 stopped igniting after two trips. I want to make a warranty claim.
+expect:
+  tools_called: [escalate_to_human]
+  outcomes: {escalate_to_human: ok}
+  tools_not_called: [issue_refund]
+  reply_includes: ["TK-|ticket"]

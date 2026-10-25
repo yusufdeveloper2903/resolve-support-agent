@@ -1,0 +1,9 @@
+id: 02-latest-order
+title: Finds "my latest order" without an order number
+category: answer from tools
+customer: C-1001
+messages:
+  - What's happening with my most recent order?
+expect:
+  tools_called: [lookup_customer, get_order]
+  reply_includes: [NW-5003, processing]

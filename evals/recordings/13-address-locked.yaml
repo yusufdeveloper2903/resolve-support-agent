@@ -1,0 +1,17 @@
+# Hand-written stand-in for a model run. Replace with real turns: python -m evals.run --live --record
+turns:
+- content:
+  - type: tool_use
+    name: update_shipping_address
+    input:
+      order_id: NW-5101
+      new_address:
+        line1: 1 Main St
+        city: Dallas
+        region: TX
+        postal_code: '75201'
+        country: US
+- content:
+  - type: text
+    text: NW-5101 has already shipped and is in transit with FedEx, so I can't change its address anymore.
+      You can ask FedEx to redirect it using tracking number 784312992211.
